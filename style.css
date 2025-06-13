@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: rgb(44, 44, 44);
+    color: rgb(228, 228, 228);
+  }
+  
+  .add-todo {
+    text-align: center;
+    padding: 32px 0;
+  }
+  
+  .add-todo input,
+  .add-todo button {
+    padding: 10px 20px;
+  }
+  
+  .todos-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .todos-wrapper div {
+    display: flex;
+    gap: 8px;
+  }
