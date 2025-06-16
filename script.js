@@ -1,34 +1,58 @@
 const todoInput = document.getElementById("todo-input");
-const todosParent = document.getElementById("todos");
-const todos = []; // --> state
+const todosContainer = document.getElementById("todos");
+
+
+let todos = [];
+
 
 function addTodo() {
-todos.push(todoInput.value);
+  const text = todoInput.value.trim(); 
 
-updateHtml();
+  if (text !== "") {
+    
+    todos.push({ text: text, completed: false });
+    todoInput.value = ""; 
+    showTodos(); 
+  }
 }
 
-function deleteTodo(index) {
-todos.splice(index, 1);
 
-updateHtml();
-}
+function showTodos() {
+  todosContainer.innerHTML = "";
 
-function updateHtml() {
-todosParent.innerHTML = "";
-// update html
-for (let i = 0; i < todos.length; i++) {
-const div = document.createElement("div");
-const para = document.createElement("p");
-const button = document.createElement("button");
+  
+  for (let i = 0; i < todos.length; i++) {
+    const todoItem = document.createElement("div");
+    todoItem.className = "todo-item";
 
-button.setAttribute("onclick", `deleteTodo(${i})`);
+    
+    if (todos[i].completed) {
+      todoItem.classList.add("completed");
+    }
 
-button.innerText = "Delete";
-para.innerText = todos[i];
+    const para = document.createElement("p");
+    para.innerText = todos[i].text;
 
-div.append(para, button);
+    
+    const markBtn = document.createElement("button");
+    markBtn.className="markBtn";
+    markBtn.innerText = todos[i].completed ? "Unmark" : "Mark";
+    markBtn.onclick = function () {
+      todos[i].completed = !todos[i].completed; 
+      showTodos();
+    };
 
-todosParent.appendChild(div);
-}
+    
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerText = "Delete";
+    deleteBtn.className="deleteBtn";
+    deleteBtn.onclick = function () {
+      todos.splice(i, 1); 
+      showTodos();
+    };
+
+    
+    todoItem.append(para, markBtn, deleteBtn);
+    todosContainer.appendChild(todoItem);
+  }
 }
